@@ -1,21 +1,26 @@
-import { SectionWrapper } from "./SectionWrapper.tsx";
-import { generateID } from "../util.tsx";
-import { Block } from "./Block.tsx";
-import { h } from "dom-chef";
+import { SectionWrapper } from './SectionWrapper.tsx';
+import { Setting } from './Setting.tsx';
+import { Settings } from './Settings.tsx';
+import { Block } from './Block.tsx';
+import { h } from 'dom-chef';
 
-export class SingleDataBlock implements Block {
+export class SingleDataBlock extends Block {
     title: string;
     contents: string;
-    internalID: string;
-    width: number;
-    height: number;
+    settings: Settings;
+    pos: number | undefined;
 
     constructor(title: string) {
-        this.internalID = generateID();
+        super();
+
         this.title = title;
         this.contents = '';
-        this.width = 1;
-        this.height = 1;
+
+        this.pos = undefined;
+
+        this.settings = new Settings();
+        this.settings.add(new Setting('height', 'Height', '1', this));
+        this.settings.add(new Setting('width', 'Width', '1', this));
     }
 
     getElement() {
@@ -24,14 +29,17 @@ export class SingleDataBlock implements Block {
         section.outer.id = this.internalID;
         section.outer.classList.add('single-data-block'); 
     
-        let textElement = <p>{this.title}</p>
-        let input = <div contentEditable className="input">{this.contents}</div>
+        let textElement = <p>{this.title}</p>;
+        let input = <div contentEditable className='input'>{this.contents}</div>;
 
         let that: SingleDataBlock = this;
-        input.addEventListener("input", function(event) {
-            let target: HTMLElement = event.target as HTMLElement
-            that.contents = target.textContent ?? "";
+
+        input.addEventListener('input', function(event) {
+            let target: HTMLElement = event.target as HTMLElement;
+            that.contents = target.textContent ?? '';
         });
+
+        section.settingsModal = this.settings.getElement();
     
         section.inner.appendChild(textElement);
         section.inner.appendChild(input);
@@ -46,7 +54,9 @@ export class SingleDataBlock implements Block {
                 title: this.title,
                 contents: this.contents
             },
-            'internalID': this.internalID
+            'settings': this.settings.toJSON(),
+            'internalID': this.internalID,
+            'pos': this.pos
         }
     }
 }

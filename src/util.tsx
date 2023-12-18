@@ -1,5 +1,3 @@
-import { h } from "dom-chef";
-
 export function rand(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -39,7 +37,7 @@ export function textToData(text: string) {
 }
 
 export function getPositionInGrid(index: number) {
-    let nColumns = window.getComputedStyle(globalThis.mainGrid).gridTemplateColumns.split(" ").length;
+    let nColumns = window.getComputedStyle(globalThis.mainGrid).gridTemplateColumns.split(' ').length;
 
     return { 
         row: (Math.floor(index / nColumns)), 

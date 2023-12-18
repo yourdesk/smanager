@@ -1,18 +1,17 @@
 import * as drag from '../drag.tsx';
+import * as Modal from '../modal.tsx';
 import { h } from 'dom-chef';
 
 export class SectionWrapper {
     outer: HTMLElement;
     inner: HTMLElement;
+    settingsModal: HTMLElement;
+
     constructor() {
-        this.outer = <section></section>
-        this.inner = <div></div>
-
-        this.inner.classList.add('inner');
-
-        let settingsButton = <img className="settings-btn" src="../../public/gear.svg" alt="Settings" />
-
-        this.inner.appendChild(settingsButton);
+        this.outer = <section></section>;
+        this.inner = <div className='inner'>
+            <img onClick={() => {this.showSettings(this)}} className='settings-btn' src='/gear.svg' alt='Settings' />
+        </div>;
 
         this.outer.draggable = true;
         this.outer.addEventListener('dragstart', drag.handleDragStart);
@@ -23,5 +22,17 @@ export class SectionWrapper {
         this.outer.addEventListener('drop', drag.handleDrop);
 
         this.outer.appendChild(this.inner);
+
+        this.settingsModal = <span>No settings</span>;
+    }
+
+    showSettings(section: SectionWrapper) {
+        let modalElement = document.getElementById(section.outer.id + '-modal');
+
+        if (modalElement) {
+            Modal.removeModalByElement(section.outer);
+        } else {
+            Modal.createModalAboveElement(section.outer, this.settingsModal);
+        }
     }
 }

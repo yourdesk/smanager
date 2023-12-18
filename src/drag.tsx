@@ -35,22 +35,22 @@ function handleDrop(this: HTMLElement, e: Event) {
     let droppedElement = document.getElementById(globalDroppedId);
 
     if (!draggedElement) {
-        console.error("draggedElement is null or undefined");
+        console.error('draggedElement is null or undefined');
         return;
     }
 
     if (!droppedElement) {
-        console.error("droppedElement is null or undefined");
+        console.error('droppedElement is null or undefined');
         return;
     }
 
     if (!newDroppedBlock) {
-        console.error("cannot find newDroppedBlock");
+        console.error('cannot find newDroppedBlock');
         return;
     }
 
     if (!newDraggedBlock) {
-        console.error("cannot find newDraggedBlock");
+        console.error('cannot find newDraggedBlock');
         return;
     }
 
