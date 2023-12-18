@@ -19,6 +19,7 @@ export class Setting {
             <span>{this.displayName}</span>
             <input type='text' value={this.data} onInput={(event) => {
                 this.data = event.currentTarget.value;
+                this.parent.rerender();
             }}/>
             <br />
         </>

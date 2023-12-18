@@ -8,8 +8,8 @@
 #main-grid {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), 1fr);
-    /* grid-template-rows: repeat(var(--grid-rows), var(--grid-item-height)); */
-    gap: 0.5rem;
+    /* grid-template-rows: repeat(100, minmax(0, 1fr)); */
+    gap: 10px;
 
     > .empty {
         border: 1px dashed gray;
@@ -18,7 +18,6 @@
     > section {    
         border: 2px solid lightgray;
         border-radius: 15px;
-        /* overflow-y: hidden; */
         padding: 0.5rem;
         height: var(--grid-item-height); 
         overflow: hidden;

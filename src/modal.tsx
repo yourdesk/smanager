@@ -1,35 +1,4 @@
-import { h } from 'dom-chef';
-
-type Offset = {
-    left: number,
-    right: number,
-    top: number,
-    bottom: number
-};
-
-function getOffset(element: HTMLElement): Offset {
-    const rect: DOMRect = element.getBoundingClientRect();
-    return {
-        left: rect.left + window.scrollX,
-        right: rect.right + window.scrollX,
-        top: rect.top + window.scrollY,
-        bottom: rect.bottom + window.scrollY,
-    };
-}
-
-function createSetting(name: string): HTMLElement {
-    let settingInput: HTMLElement = <input onInput={() => {
-        console.log('Balls');
-    }}></input>;
-    let settingLabel: HTMLElement = <p>{name}</p>; 
-
-    let wrapper = <div>
-        {settingLabel}
-        {settingInput}
-    </div>
-
-    return wrapper;
-}
+import { getOffset, Offset } from './util.tsx';
 
 export function createModalAboveElement(element: HTMLElement, elementToPlace: HTMLElement): void {
     let origElementPosition: Offset = getOffset(element);

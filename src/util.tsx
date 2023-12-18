@@ -36,7 +36,7 @@ export function textToData(text: string) {
     // correct position
 }
 
-export function getPositionInGrid(index: number) {
+export function getPositionInGrid(index: number): { row: number, column: number} {
     let nColumns = window.getComputedStyle(globalThis.mainGrid).gridTemplateColumns.split(' ').length;
 
     return { 
@@ -45,10 +45,25 @@ export function getPositionInGrid(index: number) {
     }
 }
 
-export function getElementIndex(element: HTMLElement) {
-    if (element.parentNode === null || element.parentNode === undefined) return;
-
-    let c = element.parentNode.children,
+export function getElementIndex(element: HTMLElement, parent: HTMLElement) {
+    let c = parent.children,
         i = 0;
     for (; i < c.length; i++) if (c[i] == element) return i;
+}
+
+export type Offset = {
+    left: number,
+    right: number,
+    top: number,
+    bottom: number
+};
+
+export function getOffset(element: HTMLElement): Offset {
+    const rect: DOMRect = element.getBoundingClientRect();
+    return {
+        left: rect.left + window.scrollX,
+        right: rect.right + window.scrollX,
+        top: rect.top + window.scrollY,
+        bottom: rect.bottom + window.scrollY,
+    };
 }

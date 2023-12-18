@@ -6,13 +6,17 @@ import {h} from 'dom-chef';
 import { SingleDataBlock } from './blocks/SingleDataBlock.tsx';
 import { BlockDataContainer } from './BlockDataContainer.tsx';
 import { createModalAboveElement, removeModalByElement } from './modal.tsx';
-// import { download } from './util.tsx';
-// import { test_PutBoxAboveElement, test_removePopupModalByElement } from './modules/modal.js';
 
 var mainGrid: HTMLElement = 
     document.getElementById('main-grid') 
     ?? <div id='NOT-REAL'></div>;
 var blockData: BlockDataContainer = new BlockDataContainer();
+
+(window as any).mainGrid = mainGrid;
+(window as any).blockData = blockData;
+(window as any).test_PutBoxAboveElement = createModalAboveElement;
+(window as any).test_removePopupModalByElement = removeModalByElement;
+
 
 for (let i = 0; i < 10; i++) {
     let dataTest = new SingleDataBlock('pluh ' + i);
@@ -24,10 +28,7 @@ for (let i = 0; i < 10; i++) {
 
 console.log(blockData.toJSON());
 
-(window as any).mainGrid = mainGrid;
-(window as any).blockData = blockData;
-(window as any).test_PutBoxAboveElement = createModalAboveElement;
-(window as any).test_removePopupModalByElement = removeModalByElement;
+
 
 // fix later
 
