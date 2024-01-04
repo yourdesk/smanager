@@ -1,17 +1,10 @@
 import { h } from 'dom-chef';
-import { Block } from './Block';
+import { Block } from '../blocks/Block';
+import { Setting } from './Setting';
 
-export class Setting {
-    displayName: string;
-    settingName: string;
-    data: string;
-    parent: Block;
-
+export class InputSetting extends Setting {
     constructor(settingName: string, displayName: string, data: string, parent: Block) {
-        this.displayName = displayName;
-        this.settingName = settingName;
-        this.data = data;
-        this.parent = parent;
+        super(settingName, displayName, data, parent);
     }
 
     getElement() {
@@ -20,16 +13,17 @@ export class Setting {
             <input type='text' value={this.data} onInput={(event) => {
                 this.data = event.currentTarget.value;
                 this.parent.rerender();
-            }}/>
+            }} />
             <br />
         </>
     }
 
-    toJSON() {
-        return { 
+    toJSON(): { [key: string]: Object } {
+        return {
+            'type': 'input',
             'displayName': this.displayName,
             'settingName': this.settingName,
-            'data': this.data, 
+            'data': this.data,
         };
     }
 }

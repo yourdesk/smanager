@@ -5,30 +5,48 @@ import {h} from 'dom-chef';
 
 import { SingleDataBlock } from './blocks/SingleDataBlock.tsx';
 import { BlockDataContainer } from './BlockDataContainer.tsx';
-import { createModalAboveElement, removeModalByElement } from './modal.tsx';
+import { createModalAboveElement, removeModalBySection } from './modal.tsx';
 
 var mainGrid: HTMLElement = 
     document.getElementById('main-grid') 
     ?? <div id='NOT-REAL'></div>;
 var blockData: BlockDataContainer = new BlockDataContainer();
 
+let addBlockButton: HTMLElement | null = document.getElementById("add"); 
+
 (window as any).mainGrid = mainGrid;
 (window as any).blockData = blockData;
 (window as any).test_PutBoxAboveElement = createModalAboveElement;
-(window as any).test_removePopupModalByElement = removeModalByElement;
+(window as any).test_removePopupModalByElement = removeModalBySection;
 
+function renderBlocks() {
+    mainGrid.innerHTML = '';
+
+    mainGrid.appendChild(blockData.getElement());
+}
+
+(window as any).renderBlocks = renderBlocks;
 
 for (let i = 0; i < 10; i++) {
-    let dataTest = new SingleDataBlock('pluh ' + i);
-    let section = dataTest.getElement();
+    let dataTest = new SingleDataBlock('box ' + i);
 
-    mainGrid.appendChild(section.outer);
     blockData.add(dataTest);
 }
 
 console.log(blockData.toJSON());
+renderBlocks();
 
+if (addBlockButton) {
+    console.log('found add block button');
 
+    addBlockButton.addEventListener('click', function(this: HTMLElement, e: Event) {
+        let testElement = new SingleDataBlock('added block');
+        blockData.add(testElement);
+        console.log(testElement);
+
+        renderBlocks();
+    });
+}
 
 // fix later
 

@@ -27,6 +27,6 @@ export function removeModalById(id: string): void {
     temp.remove();
 }
 
-export function removeModalByElement(element: HTMLElement): void {
+export function removeModalBySection(element: HTMLElement): void {
     removeModalById(element.id);
 }

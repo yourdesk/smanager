@@ -30,7 +30,7 @@ export class SectionWrapper {
         let modalElement = document.getElementById(section.outer.id + '-modal');
 
         if (modalElement) {
-            Modal.removeModalByElement(section.outer);
+            Modal.removeModalBySection(section.outer);
         } else {
             Modal.createModalAboveElement(section.outer, this.settingsModal);
         }

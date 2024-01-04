@@ -1,21 +1,31 @@
 import { generateID } from '../util';
 import { SectionWrapper } from './SectionWrapper';
-import { Settings } from './Settings';
-import { Setting } from './Setting';
+import { Settings } from '../settings/Settings';
+import { InputSetting } from '../settings/InputSetting';
 
 export abstract class Block {
     internalID: string;
     settings: Settings;
     title: string;
+    index: number;
 
-    constructor(title: string) {
+    constructor(title: string, index?: number, internalID?: string) {
+        if (typeof index !== "undefined" 
+            && typeof internalID !== "undefined") 
+        {
+            this.index = index;
+            this.internalID = internalID;
+        }
+
         this.internalID = generateID();
         this.settings = new Settings();
 
         this.title = title;
 
-        this.settings.add(new Setting('height', 'Height', '1', this));
-        this.settings.add(new Setting('width', 'Width', '1', this));
+        this.settings.add(new InputSetting('height', 'Height', '1', this));
+        this.settings.add(new InputSetting('width', 'Width', '1', this));
+
+        this.index = -1;
     }
 
     rerender() {

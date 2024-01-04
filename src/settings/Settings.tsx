@@ -1,10 +1,9 @@
-// Unused...?
-
 import { h } from 'dom-chef';
 import { Setting } from './Setting';
 
 export class Settings {
     settings: Map<string, Setting>;
+
     constructor() {
         this.settings = new Map<string, Setting>();
     }
@@ -27,7 +26,7 @@ export class Settings {
         return wrapper;
     }
 
-    toJSON() {
+    toJSON(): { [key: string]: Object } {
         let settingsJSON: { [key: string]: Object } = {};
 
         for (const [str, setting] of this.settings) {
@@ -35,5 +34,15 @@ export class Settings {
         }
 
         return settingsJSON;
+    }
+
+    static fromJSON(json: { [key: string]: any }): Settings {
+        /* make the input an exact format of what the JSON object should look like. goes for all fromJSON methods */
+        let tempSettings: Settings = new Settings();
+        for (const key in json) {
+            let value = json[key];
+            
+        }
+        return tempSettings;
     }
 }

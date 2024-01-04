@@ -1,11 +1,10 @@
 import { SectionWrapper } from './SectionWrapper.tsx';
 import { Block } from './Block.tsx';
-import { Settings } from '../settings/Settings.tsx'
 import * as Modal from '../modal.tsx';
 
 import { h } from 'dom-chef';
 
-export class SingleDataBlock extends Block {
+export class BigNumberBlock extends Block {
     contents: string;
 
     constructor(title: string, index?: number, internalID?: string) {
@@ -22,7 +21,7 @@ export class SingleDataBlock extends Block {
         let titleElement = <p contentEditable>{this.title}</p>;
         let input = <div contentEditable className='input'>{this.contents}</div>;
 
-        let that: SingleDataBlock = this;
+        let that: BigNumberBlock = this;
 
         input.addEventListener('input', function(event) {
             let target: HTMLElement = event.target as HTMLElement;
@@ -55,7 +54,7 @@ export class SingleDataBlock extends Block {
 
     toJSON() {
         return {
-            'type': 'SingleDataBlock',
+            'type': 'BigNumberBlock',
             'data': {
                 title: this.title,
                 contents: this.contents
@@ -66,12 +65,7 @@ export class SingleDataBlock extends Block {
         }
     }
 
-    fromJSON(json: { [key: string]: any }) {
-        this.title = json.data.title;
-        this.contents = json.data.contents;
-        this.index = json.index;
-        this.internalID = json.internalID;
-        this.settings = Settings.fromJSON(json.settings);
+    fromJSON(data: any) {
         
     }
 }
